@@ -1,0 +1,17 @@
+langgraph
+langgraph-checkpoint-sqlite
+langchain-groq
+langchain-google-genai
+
+arxiv
+pymupdf
+pymupdf4llm
+
+chromadb
+sentence-transformers
+
+pydantic
+typer
+rich
+tenacity
+python-dotenv
