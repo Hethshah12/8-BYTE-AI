@@ -6,6 +6,7 @@ from langchain_core.messages import AnyMessage
 from langgraph.graph.message import add_messages
 from pydantic import BaseModel, Field
 
+
 # Things that will be stored from the paper metadata
 # Could have used a TypedDict but pydantic Basemodel, does both validation as well as serialization/deserialization to/from JSON.
 class PaperMetadata(BaseModel):
