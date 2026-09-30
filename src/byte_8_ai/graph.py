@@ -1,16 +1,17 @@
 from langgraph.graph import END, START, StateGraph
-
+from langgraph.graph.state import CompiledStateGraph
+from byte_8_ai.nodes.retrieve import fetch_paper
 from byte_8_ai.state import AgentState, PaperMetadata
 
-dummy_paper = PaperMetadata(
-    arxiv_id="2401.12345",
-    title="Detection and Mitigation of Data poisoning in LLMS",
-    authors=["Heth Shah", "H Achyuth"],
-    published="2026-05-01T00:00:00Z",
-    abstract="This paper presents a novel approach to detect and mitigate data poisoning attacks in large language models (LLMs). We propose a multi-stage detection framework that leverages both statistical analysis and machine learning techniques to identify poisoned data points. Our mitigation strategy involves retraining the model with a curated dataset, effectively reducing the impact of poisoned data on model performance. Experimental results demonstrate the effectiveness of our approach in maintaining model accuracy while minimizing the influence of malicious inputs.",
-    pdf_url="https://arxiv.org/pdf/2401.12345.pdf",
-    categories=["cs.LG", "cs.CR"],
-)
+# dummy_paper = PaperMetadata(
+#     arxiv_id="2401.12345",
+#     title="Detection and Mitigation of Data poisoning in LLMS",
+#     authors=["Heth Shah", "H Achyuth"],
+#     published="2026-05-01T00:00:00Z",
+#     abstract="This paper presents a novel approach to detect and mitigate data poisoning attacks in large language models (LLMs). We propose a multi-stage detection framework that leverages both statistical analysis and machine learning techniques to identify poisoned data points. Our mitigation strategy involves retraining the model with a curated dataset, effectively reducing the impact of poisoned data on model performance. Experimental results demonstrate the effectiveness of our approach in maintaining model accuracy while minimizing the influence of malicious inputs.",
+#     pdf_url="https://arxiv.org/pdf/2401.12345.pdf",
+#     categories=["cs.LG", "cs.CR"],
+# )
 
 
 def route_after_classify(state: AgentState):
@@ -41,8 +42,8 @@ def index(state: AgentState):
     return {"collection_name": "stub_collection"}
 
 
-def fetch_paper(state: AgentState):
-    return {"candidates": [dummy_paper]}
+# def fetch_paper(state: AgentState):
+#     return {"candidates": [dummy_paper]}
 
 
 def classify_input(state: AgentState):
