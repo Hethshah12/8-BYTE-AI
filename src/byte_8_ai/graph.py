@@ -36,7 +36,7 @@ def rank(state: AgentState):
 
 
 def parse(state: AgentState):
-    return {"parsed_path": "data/parsed/stub.md", "parse_quality": "full"}
+    return {"parsed_path": "data/parsed/stub.md", "parsed_quality": "full"}
 
 
 def index(state: AgentState):
