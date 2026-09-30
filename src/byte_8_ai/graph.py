@@ -1,5 +1,6 @@
 from langgraph.graph import END, START, StateGraph
 
+from byte_8_ai.nodes.classify import classify_input
 from byte_8_ai.nodes.retrieve import fetch_paper
 from byte_8_ai.state import AgentState
 
@@ -35,7 +36,7 @@ def rank(state: AgentState):
 
 
 def parse(state: AgentState):
-    return {"parsed_path": "data/parsed/stub.md", "parse_quality": "full"}
+    return {"parsed_path": "data/parsed/stub.md", "parsed_quality": "full"}
 
 
 def index(state: AgentState):
@@ -46,13 +47,13 @@ def index(state: AgentState):
 #     return {"candidates": [dummy_paper]}
 
 
-def classify_input(state: AgentState):
-    text = state["user_input"].strip()
-    if not text:
-        return {"errors": ["User input is empty. Please provide a valid input."]}
-    if text[0].isdigit():
-        return {"mode": "id", "arxiv_id": text}
-    return {"mode": "topic", "search_query": text}
+# def classify_input(state: AgentState):
+#     text = state["user_input"].strip()
+#     if not text:
+#         return {"errors": ["User input is empty. Please provide a valid input."]}
+#     if text[0].isdigit():
+#         return {"mode": "id", "arxiv_id": text}
+#     return {"mode": "topic", "search_query": text}
 
 
 def create_graph():

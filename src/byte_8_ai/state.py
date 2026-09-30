@@ -48,7 +48,7 @@ class AgentState(TypedDict, total=False):
     selected_paper: PaperMetadata
     pdf_path: str
     parsed_path: str
-    parsed_quality: Literal["full", "abstract", "failed"]
+    parsed_quality: Literal["full", "abstract_only", "failed"]
     collection_name: str
     briefing: Briefing
     messages: Annotated[list[AnyMessage], add_messages]
