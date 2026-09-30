@@ -1,7 +1,7 @@
 from langgraph.graph import END, START, StateGraph
-from langgraph.graph.state import CompiledStateGraph
+
 from byte_8_ai.nodes.retrieve import fetch_paper
-from byte_8_ai.state import AgentState, PaperMetadata
+from byte_8_ai.state import AgentState
 
 # dummy_paper = PaperMetadata(
 #     arxiv_id="2401.12345",
@@ -31,7 +31,7 @@ def summarize(state: AgentState):
 
 
 def rank(state: AgentState):
-    return {"candidates": state["candidates"][0]}
+    return {"selected_paper": state["candidates"][0]}
 
 
 def parse(state: AgentState):
@@ -58,10 +58,11 @@ def classify_input(state: AgentState):
 def create_graph():
     g = StateGraph(AgentState)
     g.add_node("Classify_Input", classify_input)
-    g.add_edge(START, "Classify_Input")
     g.add_node("rank", rank)
     g.add_node("parse", parse)
     g.add_node("index", index)
+    g.add_node("summarize", summarize)
+    g.add_edge(START, "Classify_Input")
     g.add_edge("rank", "parse")
     g.add_edge("parse", "index")
     g.add_edge("index", "summarize")
@@ -73,7 +74,7 @@ def create_graph():
         {"fetch": "Fetch_paper_metadata", "invalid": END},
     )
     g.add_conditional_edges(
-        "fetch_paper_metadata", route_after_fetch, {"rank": "rank", "no results": END}
+        "Fetch_paper_metadata", route_after_fetch, {"rank": "rank", "no results": END}
     )
     g.add_edge("Fetch_paper_metadata", END)
 
@@ -82,5 +83,8 @@ def create_graph():
 
 if __name__ == "__main__":
     graph = create_graph()
-    for text in ["2401.12345", "KV cache compression", "   "]:
-        print(graph.invoke({"user_input": text}))
+    for text in ["2401.12345", "KV cache compression", "9999.99999", "  "]:
+        final = graph.invoke({"user_input": text})
+        print(f"\n--- input: {text!r}")
+        for key, value in final.items():
+            print(f"{key:16}, {value!r:.70}")

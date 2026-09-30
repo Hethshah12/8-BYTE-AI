@@ -26,6 +26,6 @@ def search_by_id(arxiv_id: str):
     return [_to_metadata(r) for r in _client.results(search)]
 
 
-def search_by_topic(query: str, max_results: int):
+def search_by_topic(query: str, max_results: int = 10):
     search = arxiv.Search(query=query, max_results=max_results)
     return [_to_metadata(r) for r in _client.results(search)]
