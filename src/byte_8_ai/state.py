@@ -15,7 +15,7 @@ class PaperMetadata(BaseModel):
     authors: list[str]
     published: datetime
     abstract: str
-    pdf_url: str
+    pdf_url: str | None = None
     categories: list[str] = Field(default_factory=list)
 
 
