@@ -3,6 +3,7 @@ from langgraph.graph import END, START, StateGraph
 from byte_8_ai.nodes.classify import classify_input
 from byte_8_ai.nodes.index import index
 from byte_8_ai.nodes.parse import parse
+from byte_8_ai.nodes.qa import qa
 from byte_8_ai.nodes.retrieve import fetch_paper
 from byte_8_ai.nodes.summarize import summarize
 from byte_8_ai.state import AgentState
@@ -58,29 +59,39 @@ def rank(state: AgentState):
 #         return {"mode": "id", "arxiv_id": text}
 #     return {"mode": "topic", "search_query": text}
 
+def create_qa_graph():
+    g=StateGraph(AgentState)
+    g.add_node("qa", qa)
+    g.add_edge(START, "qa")
+    g.add_edge("qa", END)
+    return g.compile()
 
 def create_graph():
     g = StateGraph(AgentState)
     g.add_node("Classify_Input", classify_input)
+    g.add_node("Fetch_paper_metadata", fetch_paper)
     g.add_node("rank", rank)
     g.add_node("parse", parse)
     g.add_node("index", index)
     g.add_node("summarize", summarize)
     g.add_edge(START, "Classify_Input")
+    g.add_conditional_edges(
+            "Classify_Input",
+            route_after_classify,
+            {"fetch": "Fetch_paper_metadata", "invalid": END},
+        )
+    g.add_conditional_edges(
+            "Fetch_paper_metadata", route_after_fetch, {"rank": "rank", "no results": END}
+        )
+    g.add_edge("Fetch_paper_metadata", END)
+
     g.add_edge("rank", "parse")
     g.add_edge("parse", "index")
     g.add_edge("index", "summarize")
     g.add_edge("summarize", END)
-    g.add_node("Fetch_paper_metadata", fetch_paper)
-    g.add_conditional_edges(
-        "Classify_Input",
-        route_after_classify,
-        {"fetch": "Fetch_paper_metadata", "invalid": END},
-    )
-    g.add_conditional_edges(
-        "Fetch_paper_metadata", route_after_fetch, {"rank": "rank", "no results": END}
-    )
-    g.add_edge("Fetch_paper_metadata", END)
+    
+    
+    
 
     return g.compile()
 
