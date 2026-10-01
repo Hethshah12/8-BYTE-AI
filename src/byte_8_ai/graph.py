@@ -1,8 +1,10 @@
 from langgraph.graph import END, START, StateGraph
-from byte_8_ai.nodes.index import index
+
 from byte_8_ai.nodes.classify import classify_input
+from byte_8_ai.nodes.index import index
 from byte_8_ai.nodes.parse import parse
 from byte_8_ai.nodes.retrieve import fetch_paper
+from byte_8_ai.nodes.summarize import summarize
 from byte_8_ai.state import AgentState
 
 # dummy_paper = PaperMetadata(
@@ -28,8 +30,8 @@ def route_after_fetch(state: AgentState):
     return "rank"
 
 
-def summarize(state: AgentState):
-    return {}
+# def summarize(state: AgentState):
+#     return {}
 
 
 def rank(state: AgentState):
