@@ -34,7 +34,7 @@ def clean_heading(line: str):
 def split_into_sections(markdown: str):
     """return a list of all the sections"""
     sections = []
-    title = "bleh"
+    title = "Front Matter"
     lines = []
 
     for line in markdown.splitlines():

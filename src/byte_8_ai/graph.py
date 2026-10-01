@@ -8,22 +8,10 @@ from byte_8_ai.nodes.retrieve import fetch_paper
 from byte_8_ai.nodes.summarize import summarize
 from byte_8_ai.state import AgentState
 
-# dummy_paper = PaperMetadata(
-#     arxiv_id="2401.12345",
-#     title="Detection and Mitigation of Data poisoning in LLMS",
-#     authors=["Heth Shah", "H Achyuth"],
-#     published="2026-05-01T00:00:00Z",
-#     abstract="This paper presents a novel approach to detect and mitigate data poisoning attacks in large language models (LLMs). We propose a multi-stage detection framework that leverages both statistical analysis and machine learning techniques to identify poisoned data points. Our mitigation strategy involves retraining the model with a curated dataset, effectively reducing the impact of poisoned data on model performance. Experimental results demonstrate the effectiveness of our approach in maintaining model accuracy while minimizing the influence of malicious inputs.",
-#     pdf_url="https://arxiv.org/pdf/2401.12345.pdf",
-#     categories=["cs.LG", "cs.CR"],
-# )
-
-
 def route_after_classify(state: AgentState):
     if state.get("errors"):
         return "invalid"
     return "fetch"
-
 
 def route_after_fetch(state: AgentState):
     if not state.get("candidates"):
@@ -31,33 +19,8 @@ def route_after_fetch(state: AgentState):
     return "rank"
 
 
-# def summarize(state: AgentState):
-#     return {}
-
-
 def rank(state: AgentState):
     return {"selected_paper": state["candidates"][0]}
-
-
-# def parse(state: AgentState):
-#     return {"parsed_path": "data/parsed/stub.md", "parsed_quality": "full"}
-
-
-# def index(state: AgentState):
-#     return {"collection_name": "stub_collection"}
-
-
-# def fetch_paper(state: AgentState):
-#     return {"candidates": [dummy_paper]}
-
-
-# def classify_input(state: AgentState):
-#     text = state["user_input"].strip()
-#     if not text:
-#         return {"errors": ["User input is empty. Please provide a valid input."]}
-#     if text[0].isdigit():
-#         return {"mode": "id", "arxiv_id": text}
-#     return {"mode": "topic", "search_query": text}
 
 def create_qa_graph():
     g=StateGraph(AgentState)
@@ -91,8 +54,6 @@ def create_graph():
     g.add_edge("summarize", END)
     
     
-    
-
     return g.compile()
 
 
