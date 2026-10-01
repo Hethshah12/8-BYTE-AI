@@ -1,5 +1,5 @@
 from langgraph.graph import END, START, StateGraph
-
+from byte_8_ai.nodes.index import index
 from byte_8_ai.nodes.classify import classify_input
 from byte_8_ai.nodes.parse import parse
 from byte_8_ai.nodes.retrieve import fetch_paper
@@ -40,8 +40,8 @@ def rank(state: AgentState):
 #     return {"parsed_path": "data/parsed/stub.md", "parsed_quality": "full"}
 
 
-def index(state: AgentState):
-    return {"collection_name": "stub_collection"}
+# def index(state: AgentState):
+#     return {"collection_name": "stub_collection"}
 
 
 # def fetch_paper(state: AgentState):
